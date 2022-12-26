@@ -1,7 +1,9 @@
-import 'package:awesome_bottom_navigation/awesome_bottom_navigation.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'package:weather_app/home/search_page.dart';
@@ -57,26 +59,35 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: AwesomeBottomNav(
-          icons: [
-            Icons.home_outlined,
-            Icons.shopping_cart_outlined,
-            Icons.category_outlined,
-            Icons.account_circle_outlined,
+        bottomNavigationBar: CurvedNavigationBar(
+          color: Color(0xff2E335A),
+          buttonBackgroundColor: Color(0xff3C3C43),
+          backgroundColor: Color(0xff25936B4),
+          items: <Widget>[
+            SvgPicture.asset(
+              'assets/svg/loc.svg',
+              height: 40,
+              width: 40,
+            ),
+            Icon(
+              Icons.add,
+              size: 40,
+              color: Colors.white,
+            ),
+            Icon(
+              Icons.format_list_bulleted,
+              size: 40,
+              color: Colors.white,
+            ),
           ],
-          highlightedIcons: [
-            Icons.home,
-            Icons.shopping_cart,
-            Icons.category,
-            Icons.account_circle,
-          ],
-          bodyBgColor: Colors.red,
-          highlightColor: Color(0xFFFF9944),
-          navFgColor: Colors.grey.withOpacity(0.5),
-          navBgColor: Colors.white,
+          onTap: (index) {
+            //Handle button tap
+          },
         ),
         extendBodyBehindAppBar: true,
         extendBody: true,
@@ -103,6 +114,7 @@ class _HomePageState extends State<HomePage> {
                   image: AssetImage('assets/images/night.png'),
                   fit: BoxFit.cover)),
           child: SmartRefresher(
+            
             controller: controller,
             enablePullDown: true,
             onRefresh: () async {

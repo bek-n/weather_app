@@ -18,7 +18,10 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (context, child) {
           return RefreshConfiguration(
-            headerBuilder: () => WaterDropMaterialHeader(),
+            headerBuilder: () => WaterDropMaterialHeader(
+              backgroundColor: Colors.white,
+              color: Color.fromARGB(255, 97, 3, 61).withOpacity(0.75),
+            ),
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
               home: SplashScreen(),

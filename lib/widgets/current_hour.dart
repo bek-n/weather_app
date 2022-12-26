@@ -12,7 +12,7 @@ class ShowCurrentTime extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 22, top: 70),
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 125, top: 70),
       child: Container(
         width: 70.w,
         decoration: BoxDecoration(

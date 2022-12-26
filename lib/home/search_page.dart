@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:weather_app/home/home_page.dart';
 
@@ -40,7 +38,9 @@ class _SearchPAgeState extends State<SearchPAge> {
                 style: TextStyle(color: Colors.white),
                 textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
-                    contentPadding: EdgeInsets.only(left: 150),
+                    hintText: ' Search for a city or airport',
+                    hintStyle: TextStyle(color: Colors.white),
+                    contentPadding: EdgeInsets.only(left: 30),
                     suffixIcon: Icon(
                       Icons.search_sharp,
                       color: Colors.white,
@@ -62,7 +62,8 @@ class _SearchPAgeState extends State<SearchPAge> {
               onTap: () {
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
-                        builder: ((context) => HomePage(name1: countries.text))),
+                        builder: ((context) =>
+                            HomePage(name1: countries.text))),
                     (route) => false);
               },
               child: Container(
