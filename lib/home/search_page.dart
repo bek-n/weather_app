@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:weather_app/home/home_page.dart';
 
@@ -58,10 +60,10 @@ class _SearchPAgeState extends State<SearchPAge> {
             ),
             InkWell(
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: ((context) => HomePage(
-                          name: countries.text,
-                        ))));
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: ((context) => HomePage(name1: countries.text))),
+                    (route) => false);
               },
               child: Container(
                 height: MediaQuery.of(context).size.height / 18,

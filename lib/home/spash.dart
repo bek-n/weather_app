@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
       isLoading = false;
       setState(() {});
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: ((context) => HomePage())),
+          MaterialPageRoute(builder: ((context) => HomePage(name1: 'Tashkent',))),
           (route) => false);
     });
     super.initState();
