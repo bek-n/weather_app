@@ -11,22 +11,50 @@ class ShowCurrentTime extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 146.h,
-      width: 60.w,
-      margin: EdgeInsets.only(left: 12),
-      decoration: BoxDecoration(
-        color: isActive ? Color(0xff48319D) : Color(0x5048319D),
-        borderRadius: BorderRadius.all(Radius.circular(30)),
-      ),
-      child: Column(
-        children: [
-          Text((title ?? "").substring((title ?? "").indexOf(" ") + 1)),
-          Image.network('https:${image ?? ''}'),
-          Text((temp ?? 0)
-              .toString()
-              .substring(0, (temp ?? 0).toString().indexOf('.')))
-        ],
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 22, top: 70),
+      child: Container(
+        width: 70.w,
+        decoration: BoxDecoration(
+          color: isActive ? Color(0xff48319D) : Color.fromARGB(80, 85, 61, 170),
+          borderRadius: BorderRadius.all(Radius.circular(30)),
+        ),
+        child: Column(
+          children: [
+            16.verticalSpace,
+            Text(
+              (title ?? "").substring((title ?? "").indexOf(" ") + 1),
+              style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white),
+            ),
+            12.verticalSpace,
+            Image.network('https:${image ?? ''}'),
+            14.verticalSpace,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  (temp ?? 0)
+                      .toString()
+                      .substring(0, (temp ?? 0).toString().indexOf('.')),
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white),
+                ),
+                Text(
+                  '°',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white),
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
