@@ -11,6 +11,7 @@ import 'package:weather_app/model/model.dart';
 
 import '../repository/get_info.dart';
 import '../widgets/current_hour.dart';
+import '../widgets/shimmer_items.dart';
 
 class HomePage extends StatefulWidget {
   final String name1;
@@ -58,8 +59,6 @@ class _HomePageState extends State<HomePage> {
     controller.dispose();
     super.dispose();
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -114,73 +113,84 @@ class _HomePageState extends State<HomePage> {
                   image: AssetImage('assets/images/night.png'),
                   fit: BoxFit.cover)),
           child: SmartRefresher(
-            
             controller: controller,
             enablePullDown: true,
             onRefresh: () async {
               await getInfo();
               controller.refreshCompleted();
             },
-            child: Column(
-              children: [
-                130.verticalSpace,
-                SizedBox(
-                  height: 12,
-                ),
-                Text(weatherdata.location?.name ?? '',
-                    style: TextStyle(fontSize: 34, color: Colors.white)),
-                5.verticalSpace,
-                Text('${weatherdata.current?.tempC ?? ''}°',
-                    style: TextStyle(fontSize: 96, color: Colors.white)),
-                5.verticalSpace,
-                Text(weatherdata.current?.condition?.text ?? '',
-                    style: TextStyle(fontSize: 20, color: Colors.grey)),
-                3.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                        "H:${weatherdata.forecast?.forecastday?.first.day?.maxtempC ?? 0}",
-                        style: TextStyle(fontSize: 20, color: Colors.white)),
-                    15.horizontalSpace,
-                    Text(
-                        "L:${weatherdata.forecast?.forecastday?.last.day?.maxtempC ?? 0}",
-                        style: TextStyle(fontSize: 20, color: Colors.white)),
-                  ],
-                ),
-                Spacer(),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height / 2.5,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topLeft,
-                          colors: [
-                            Color(0xff48319D),
-                            Color.fromARGB(255, 97, 3, 61).withOpacity(0.75),
-                            Color(0xff2E335A),
-                          ]),
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(44),
-                          topRight: Radius.circular(44))),
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: weatherdata
-                              .forecast?.forecastday?.first.hour?.length ??
-                          0,
-                      itemBuilder: ((context, index) => ShowCurrentTime(
-                            isActive: checkHour(index, weatherdata),
-                            title: weatherdata
-                                .forecast?.forecastday?.first.hour?[index].time,
-                            temp: weatherdata.forecast?.forecastday?.first
-                                .hour?[index].tempC,
-                            image: weatherdata.forecast?.forecastday?.first
-                                .hour?[index].condition?.icon,
-                          ))),
-                )
-              ],
-            ),
+            child: isLoading
+                ? const ShimmerItems(
+                    height: 20,
+                    width: 20,
+                  )
+                : Column(
+                    children: [
+                      130.verticalSpace,
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Text(weatherdata.location?.name ?? '',
+                          style: TextStyle(fontSize: 34, color: Colors.white)),
+                      5.verticalSpace,
+                      Text('${weatherdata.current?.tempC ?? ''}°',
+                          style: TextStyle(fontSize: 96, color: Colors.white)),
+                      5.verticalSpace,
+                      Text(weatherdata.current?.condition?.text ?? '',
+                          style: TextStyle(fontSize: 20, color: Colors.grey)),
+                      3.verticalSpace,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                              "H:${weatherdata.forecast?.forecastday?.first.day?.maxtempC ?? 0}",
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.white)),
+                          15.horizontalSpace,
+                          Text(
+                              "L:${weatherdata.forecast?.forecastday?.last.day?.maxtempC ?? 0}",
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.white)),
+                        ],
+                      ),
+                      Spacer(),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height / 2.5,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.bottomCenter,
+                                end: Alignment.topLeft,
+                                colors: [
+                                  Color(0xff48319D),
+                                  Color.fromARGB(255, 97, 3, 61)
+                                      .withOpacity(0.75),
+                                  Color(0xff2E335A),
+                                ]),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(44),
+                                topRight: Radius.circular(44))),
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: weatherdata.forecast?.forecastday?.first
+                                    .hour?.length ??
+                                0,
+                            itemBuilder: ((context, index) => Padding(
+                                  padding: const EdgeInsets.only(
+                                      bottom: 100, top: 30),
+                                  child: ShowCurrentTime(
+                                    isActive: checkHour(index, weatherdata),
+                                    title: weatherdata.forecast?.forecastday
+                                        ?.first.hour?[index].time,
+                                    temp: weatherdata.forecast?.forecastday
+                                        ?.first.hour?[index].tempC,
+                                    image: weatherdata.forecast?.forecastday
+                                        ?.first.hour?[index].condition?.icon,
+                                  ),
+                                ))),
+                      )
+                    ],
+                  ),
           ),
         ));
   }
